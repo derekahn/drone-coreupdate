@@ -1,5 +1,7 @@
 # Drone Coreupdate
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/derekahn/drone-coreupdate)](https://goreportcard.com/report/github.com/derekahn/drone-coreupdate)
+
 A drone plugin for creating and uploading packages to coreos coreupdate
 
 > This is just a wrapper around [updateservicectl](https://github.com/coreos/updateservicectl)
