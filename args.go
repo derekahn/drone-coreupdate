@@ -30,6 +30,7 @@ type (
 		Version string
 		URL     string
 		File    string
+		Src     string
 	}
 
 	// Job TODO
@@ -171,6 +172,10 @@ var (
 			Usage:  "updateservicectl package [create || upload] --file",
 			EnvVar: "PKG_FILE,PLUGIN_PKG_FILE",
 		},
+		cli.StringFlag{
+			Name:   "pkg.src",
+			Usage:  "target directory to tarball",
+			EnvVar: "PKG_SRC,PLUGIN_PKG_SRC",
 		},
 	}
 

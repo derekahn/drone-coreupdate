@@ -64,6 +64,7 @@ func run(c *cli.Context) error {
 			Version: c.String("pkg.version"),
 			URL:     c.String("pkg.url"),
 			File:    c.String("pkg.file"),
+			Src:     c.String("pkg.src"),
 		},
 	}
 	return plugin.Exec()
