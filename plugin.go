@@ -17,6 +17,11 @@ type Plugin struct {
 
 // Exec plugin (entry)
 func (p Plugin) Exec() error {
+	err := p.archive()
+	if err != nil {
+		return err
+	}
+
 	output, err := p.createPackage()
 	if err != nil {
 		return err
@@ -30,6 +35,22 @@ func (p Plugin) Exec() error {
 	log.Println(string(output))
 
 	return nil
+}
+
+func (p Plugin) archive() error {
+	dir := p.Config.Src
+
+	files, err := ioutil.ReadDir(dir)
+	if err != nil {
+		return err
+	}
+
+	var payload []string
+	for _, f := range files {
+		payload = append(payload, dir+"/"+f.Name())
+	}
+
+	return archiver.Archive(payload, p.fileName())
 }
 
 func (p Plugin) fileName() string {
