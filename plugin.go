@@ -6,6 +6,7 @@ import (
 	"os/exec"
 
 	_ "github.com/joho/godotenv/autoload"
+	"github.com/mholt/archiver"
 )
 
 // Plugin TODO
