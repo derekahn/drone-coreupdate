@@ -139,37 +139,38 @@ var (
 		cli.StringFlag{
 			Name:   "app.id",
 			Usage:  "updateservicectl --app-id",
-			EnvVar: "UPDATECTL_APP_ID,PLUGIN_UPDATECTL_APP_ID",
+			EnvVar: "APP_ID,PLUGIN_APP_ID",
 		},
 		cli.StringFlag{
 			Name:   "key",
 			Usage:  "updateservicectl --key",
-			EnvVar: "UPDATECTL_KEY,PLUGIN_UPDATECTL_KEY",
+			EnvVar: "KEY,PLUGIN_KEY",
 		},
 		cli.StringFlag{
 			Name:   "user",
 			Usage:  "updateservicectl --user",
-			EnvVar: "UPDATECTL_USER,PLUGIN_UPDATECTL_USER",
+			EnvVar: "USER,PLUGIN_USER",
 		},
 		cli.StringFlag{
 			Name:   "server",
 			Usage:  "updateservicectl --server",
-			EnvVar: "UPDATECTL_SERVER,PLUGIN_UPDATECTL_SERVER",
+			EnvVar: "SERVER,PLUGIN_SERVER",
 		},
 		cli.StringFlag{
 			Name:   "pkg.version",
 			Usage:  "updateservicectl package create --version",
-			EnvVar: "UPDATECTL_PKG_VERSION,PLUGIN_UPDATECTL_PKG_VERSION",
+			EnvVar: "PKG_VERSION,PLUGIN_PKG_VERSION",
 		},
 		cli.StringFlag{
 			Name:   "pkg.url",
 			Usage:  "updateservicectl package create --url",
-			EnvVar: "UPDATECTL_PKG_URL,PLUGIN_UPDATECTL_PKG_URL",
+			EnvVar: "PKG_URL,PLUGIN_PKG_URL",
 		},
 		cli.StringFlag{
 			Name:   "pkg.file",
 			Usage:  "updateservicectl package [create || upload] --file",
-			EnvVar: "UPDATECTL_PKG_FILE,PLUGIN_UPDATECTL_PKG_FILE",
+			EnvVar: "PKG_FILE,PLUGIN_PKG_FILE",
+		},
 		},
 	}
 
