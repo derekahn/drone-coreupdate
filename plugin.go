@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os/exec"
 
-	_ "github.com/joho/godotenv/autoload"
 	"github.com/mholt/archiver"
 )
 
@@ -34,18 +32,18 @@ func (p Plugin) Exec() error {
 	return nil
 }
 
+func (p Plugin) fileName() string {
+	return p.Config.File + "." + p.Config.Version + ".tar"
+}
+
 func (p Plugin) createPackage() ([]byte, error) {
 	action := []string{
 		"package",
 		"create",
 		"--app-id=" + p.Config.AppID,
 		"--version=" + p.Config.Version,
-		fmt.Sprintf("--file=%s.%s.tar", p.Config.File, p.Config.Version),
-		fmt.Sprintf("--url=%s/%s.%s.tar",
-			p.Config.URL,
-			p.Config.File,
-			p.Config.Version,
-		),
+		"--file=" + p.fileName(),
+		"--url=" + p.Config.URL + "." + p.fileName(),
 	}
 
 	cmd, args := p.baseCMD()
@@ -58,7 +56,7 @@ func (p Plugin) uploadPackage() ([]byte, error) {
 	action := []string{
 		"package",
 		"upload",
-		fmt.Sprintf("--file=%s.%s.tar", p.Config.File, p.Config.Version),
+		"--file=" + p.fileName(),
 	}
 
 	cmd, args := p.baseCMD()

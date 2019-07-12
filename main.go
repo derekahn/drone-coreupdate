@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -23,7 +22,7 @@ func main() {
 	app.Name = "coreupdate plugin"
 	app.Usage = "coreupdate plugin"
 	app.Action = run
-	app.Version = fmt.Sprintf("%s+%s", version, build)
+	app.Version = version + "+" + build
 	app.Flags = flags
 
 	if err := app.Run(os.Args); err != nil {
