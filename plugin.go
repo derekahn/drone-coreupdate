@@ -64,7 +64,7 @@ func (p Plugin) createPackage() ([]byte, error) {
 		"--app-id=" + p.Config.AppID,
 		"--version=" + p.Config.Version,
 		"--file=" + p.fileName(),
-		"--url=" + p.Config.URL + "." + p.fileName(),
+		"--url=" + p.Config.URL + "/" + p.fileName(),
 	}
 
 	cmd, args := p.baseCMD()
