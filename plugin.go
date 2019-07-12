@@ -1,13 +1,14 @@
 package main
 
 import (
+	"io/ioutil"
 	"log"
 	"os/exec"
 
 	"github.com/mholt/archiver"
 )
 
-// Plugin TODO
+// Plugin contains all (master)
 type Plugin struct {
 	Repo   Repo
 	Build  Build
@@ -15,7 +16,7 @@ type Plugin struct {
 	Job    Job
 }
 
-// Exec plugin (entry)
+// Exec is the entrypoint
 func (p Plugin) Exec() error {
 	err := p.archive()
 	if err != nil {
@@ -37,6 +38,7 @@ func (p Plugin) Exec() error {
 	return nil
 }
 
+// creates a tarball from PKG_SRC/*
 func (p Plugin) archive() error {
 	dir := p.Config.Src
 
@@ -53,10 +55,12 @@ func (p Plugin) archive() error {
 	return archiver.Archive(payload, p.fileName())
 }
 
+// formats filename; ie some-project.0.1.0.tar
 func (p Plugin) fileName() string {
 	return p.Config.File + "." + p.Config.Version + ".tar"
 }
 
+// runs '$ updateservicectl package create'
 func (p Plugin) createPackage() ([]byte, error) {
 	action := []string{
 		"package",
@@ -73,6 +77,7 @@ func (p Plugin) createPackage() ([]byte, error) {
 	return exec.Command(cmd, args...).Output()
 }
 
+// runs '$ updateservicectl package upload'
 func (p Plugin) uploadPackage() ([]byte, error) {
 	action := []string{
 		"package",
@@ -86,11 +91,13 @@ func (p Plugin) uploadPackage() ([]byte, error) {
 	return exec.Command(cmd, args...).Output()
 }
 
+// runs 'updateservicectl' with the required flags
 func (p Plugin) baseCMD() (string, []string) {
 	flags := []string{
 		"--key=" + p.Config.Key,
 		"--user=" + p.Config.User,
 		"--server=" + p.Config.Server,
 	}
+
 	return "updateservicectl", flags
 }

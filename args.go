@@ -33,7 +33,7 @@ type (
 		Src     string
 	}
 
-	// Job TODO
+	// Job captures drone runtime events
 	Job struct {
 		Started int64
 	}
