@@ -25,7 +25,7 @@ clean:
 ## install: Installs 🐹 dependencies
 .PHONY: install
 install:
-	@echo "  $(M)  Checking if there is any missing dependencies...\n"
+	@echo "  $(M)  👀 for any missing 🐹 dependencies...\n"
 	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go get $(get) ./...
 	@echo $(DONE)
 
@@ -33,7 +33,18 @@ install:
 .PHONY: run
 run:
 	@echo "  $(M)  🏃 Running the 🐳 image...\n"
-	docker run -it --rm --name $(PROJECTNAME) -t $(PROJECTNAME):dev
+	docker run -it --rm --name $(PROJECTNAME) \
+	-e PLUGIN_APP_ID="$(PLUGIN_APP_ID)" \
+	-e PLUGIN_KEY="$(PLUGIN_KEY)" \
+	-e PLUGIN_SERVER="$(PLUGIN_SERVER)" \
+	-e PLUGIN_USER="$(PLUGIN_USER)" \
+	-e PLUGIN_PKG_URL="$(PLUGIN_PKG_URL)" \
+	-e PLUGIN_PKG_SRC="$(PLUGIN_PKG_SRC)" \
+	-e PLUGIN_PKG_FILE="$(PLUGIN_PKG_FILE)" \
+	-e PLUGIN_PKG_VERSION="$(PLUGIN_PKG_VERSION)" \
+	-v "$(PWD)":"$(PWD)" \
+	-w "$(PWD)" \
+	$(PROJECTNAME):dev
 	@echo $(DONE)
 
 ## shell: To be executed after `make run` to give you a shell into the running container
