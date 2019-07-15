@@ -150,7 +150,7 @@ var (
 		cli.StringFlag{
 			Name:   "user",
 			Usage:  "updateservicectl --user",
-			EnvVar: "USER,PLUGIN_USER",
+			EnvVar: "CTL_USER,PLUGIN_USER",
 		},
 		cli.StringFlag{
 			Name:   "server",
