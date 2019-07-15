@@ -10,18 +10,30 @@ A drone plugin for **creating** and **uploading** packages to coreos coreupdate.
   ```bash
   $ tar -xopvf ./$PLUGIN_PKG_FILE.$PLUGIN_PKG_VERSION.tar
   ```
-- runs:
+- [creates 📦](https://coreos.com/products/coreupdate/docs/latest/updatectl-client.html#package-management):
 
   ```bash
-  $ updateservicectl package create \
-    --version=$PLUGIN_PKG_VERSION   \
-    --url=$PLUGIN_PKG_URL           \
+  $ updateservicectl
+    --user=$PLUGIN_USER \
+    --key=$PLUGIN_KEY \
+    --server=$PLUGIN_SERVER \
+
+    package create \
+    --app-id=$PLUGIN_APP_ID
+    --version=$PLUGIN_PKG_VERSION \
+    --url=$PLUGIN_SERVER/packages/$PLUGIN_PKG_FILE.$PLUGIN_PKG_VERSION.tar  \
     --file=$PLUGIN_PKG_FILE.$PLUGIN_PKG_VERSION.tar
   ```
 
-- uploads:
+- uploads 📦:
+
   ```bash
-  $ updateservicectl package upload \
+  $ updateservicectl
+    --user=$PLUGIN_USER \
+    --key=$PLUGIN_KEY \
+    --server=$PLUGIN_SERVER \
+
+    package upload \
     --file=$PLUGIN_PKG_FILE.$PLUGIN_PKG_VERSION.tar
   ```
 
