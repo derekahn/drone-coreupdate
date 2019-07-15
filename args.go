@@ -28,7 +28,6 @@ type (
 		User    string
 		Server  string
 		Version string
-		URL     string
 		File    string
 		Src     string
 	}
@@ -161,11 +160,6 @@ var (
 			Name:   "pkg.version",
 			Usage:  "updateservicectl package create --version",
 			EnvVar: "PKG_VERSION,PLUGIN_PKG_VERSION",
-		},
-		cli.StringFlag{
-			Name:   "pkg.url",
-			Usage:  "updateservicectl package create --url",
-			EnvVar: "PKG_URL,PLUGIN_PKG_URL",
 		},
 		cli.StringFlag{
 			Name:   "pkg.file",
