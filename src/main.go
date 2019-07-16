@@ -33,8 +33,11 @@ func main() {
 func run(c *cli.Context) error {
 	plugin := Plugin{
 		Repo: Repo{
-			Owner: c.String("repo.owner"),
-			Name:  c.String("repo.name"),
+			API:    c.String("repo.api"),
+			Header: c.String("repo.header"),
+			Name:   c.String("repo.name"),
+			Owner:  c.String("repo.owner"),
+			Token:  c.String("repo.token"),
 		},
 		Build: Build{
 			Tag:      c.String("build.tag"),
@@ -56,13 +59,12 @@ func run(c *cli.Context) error {
 			Started: c.Int64("job.started"),
 		},
 		Config: Config{
-			AppID:   c.String("app.id"),
-			Key:     c.String("key"),
-			User:    c.String("user"),
-			Server:  c.String("server"),
-			Version: c.String("pkg.version"),
-			File:    c.String("pkg.file"),
-			Src:     c.String("pkg.src"),
+			AppID:  c.String("app.id"),
+			Key:    c.String("key"),
+			User:   c.String("user"),
+			Server: c.String("server"),
+			File:   c.String("pkg.file"),
+			Src:    c.String("pkg.src"),
 		},
 	}
 	return plugin.Exec()

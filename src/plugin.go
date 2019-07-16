@@ -1,11 +1,8 @@
 package main
 
 import (
-	"io/ioutil"
 	"log"
 	"os/exec"
-
-	"github.com/mholt/archiver"
 )
 
 // Plugin contains all (master)
@@ -18,18 +15,31 @@ type Plugin struct {
 
 // Exec is the entrypoint
 func (p Plugin) Exec() error {
-	err := p.archive()
+	version, err := fetchTag(p.Repo.API, p.Repo.Header, p.Repo.Token)
 	if err != nil {
 		return err
 	}
 
-	output, err := p.createPackage()
+	dir := p.Config.Src
+	file := p.Config.File + "." + version + ".tar"
+
+	err = findAndReplace(dir, "${VERSION}", version)
+	if err != nil {
+		return err
+	}
+
+	err = archive(dir, file)
+	if err != nil {
+		return err
+	}
+
+	output, err := p.createPackage(file, version)
 	if err != nil {
 		return err
 	}
 	log.Println(string(output))
 
-	output, err = p.uploadPackage()
+	output, err = p.uploadPackage(file)
 	if err != nil {
 		return err
 	}
@@ -38,56 +48,32 @@ func (p Plugin) Exec() error {
 	return nil
 }
 
-// creates a tarball from PKG_SRC/*
-func (p Plugin) archive() error {
-	dir := p.Config.Src
-
-	files, err := ioutil.ReadDir(dir)
-	if err != nil {
-		return err
-	}
-
-	var payload []string
-	for _, f := range files {
-		payload = append(payload, dir+"/"+f.Name())
-	}
-
-	return archiver.Archive(payload, p.fileName())
-}
-
-// formats filename; ie some-project.0.1.0.tar
-func (p Plugin) fileName() string {
-	return p.Config.File + "." + p.Config.Version + ".tar"
-}
-
 // runs '$ updateservicectl package create'
-func (p Plugin) createPackage() ([]byte, error) {
+func (p Plugin) createPackage(file, version string) ([]byte, error) {
 	action := []string{
 		"package",
 		"create",
 		"--app-id=" + p.Config.AppID,
-		"--version=" + p.Config.Version,
-		"--file=" + p.fileName(),
-		"--url=" + p.Config.Server + "/packages/" + p.fileName(),
+		"--version=" + version,
+		"--file=" + file,
+		"--url=" + p.Config.Server + "/packages/" + file,
 	}
 
 	cmd, args := p.baseCMD()
 	args = append(args, action...)
-
 	return exec.Command(cmd, args...).Output()
 }
 
 // runs '$ updateservicectl package upload'
-func (p Plugin) uploadPackage() ([]byte, error) {
+func (p Plugin) uploadPackage(file string) ([]byte, error) {
 	action := []string{
 		"package",
 		"upload",
-		"--file=" + p.fileName(),
+		"--file=" + file,
 	}
 
 	cmd, args := p.baseCMD()
 	args = append(args, action...)
-
 	return exec.Command(cmd, args...).Output()
 }
 
@@ -98,6 +84,5 @@ func (p Plugin) baseCMD() (string, []string) {
 		"--user=" + p.Config.User,
 		"--server=" + p.Config.Server,
 	}
-
 	return "updateservicectl", flags
 }

@@ -23,13 +23,12 @@ type (
 
 	// Config is settings by user
 	Config struct {
-		AppID   string
-		Key     string
-		User    string
-		Server  string
-		Version string
-		File    string
-		Src     string
+		AppID  string
+		Key    string
+		User   string
+		Server string
+		File   string
+		Src    string
 	}
 
 	// Job captures drone runtime events
@@ -39,8 +38,11 @@ type (
 
 	// Repo is git details
 	Repo struct {
-		Owner string
-		Name  string
+		API    string
+		Header string
+		Name   string
+		Owner  string
+		Token  string
 	}
 
 	flags []cli.Flag
@@ -157,11 +159,6 @@ var (
 			EnvVar: "SERVER,PLUGIN_SERVER",
 		},
 		cli.StringFlag{
-			Name:   "pkg.version",
-			Usage:  "updateservicectl package create --version",
-			EnvVar: "PKG_VERSION,PLUGIN_PKG_VERSION",
-		},
-		cli.StringFlag{
 			Name:   "pkg.file",
 			Usage:  "updateservicectl package [create || upload] --file",
 			EnvVar: "PKG_FILE,PLUGIN_PKG_FILE",
@@ -183,14 +180,29 @@ var (
 
 	repoArgs = []cli.Flag{
 		cli.StringFlag{
-			Name:   "repo.owner",
-			Usage:  "repository owner",
-			EnvVar: "DRONE_REPO_OWNER",
+			Name:   "repo.api",
+			Usage:  "git api URL to fetch a list of tags",
+			EnvVar: "GIT_API,PLUGIN_GIT_API",
+		},
+		cli.StringFlag{
+			Name:   "repo.header",
+			Usage:  "git api header key",
+			EnvVar: "GIT_HEADER,PLUGIN_GIT_HEADER",
 		},
 		cli.StringFlag{
 			Name:   "repo.name",
 			Usage:  "repository name",
 			EnvVar: "DRONE_REPO_NAME",
+		},
+		cli.StringFlag{
+			Name:   "repo.owner",
+			Usage:  "repository owner",
+			EnvVar: "DRONE_REPO_OWNER",
+		},
+		cli.StringFlag{
+			Name:   "repo.token",
+			Usage:  "git API access token with repo read permissions",
+			EnvVar: "GIT_TOKEN,PLUGIN_GIT_TOKEN",
 		},
 	}
 )

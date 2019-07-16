@@ -1,7 +1,8 @@
 FROM golang:1.12.7-alpine AS builder
 
 WORKDIR /src
-COPY ./ ./
+COPY ./go.mod ./
+COPY ./src ./
 
 RUN apk add --no-cache git && \
 		go mod download && \
