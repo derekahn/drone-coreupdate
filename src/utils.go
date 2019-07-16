@@ -24,7 +24,7 @@ func archive(dir, name string) error {
 	return archiver.Archive(payload, name)
 }
 
-// findAndReplace handles interpolation "${VERSION}" -> "1.0.1"
+// findAndReplace handles interpolation: 'find' -> 'replace'
 func findAndReplace(dir, find, replace string) error {
 	files, err := ioutil.ReadDir(dir)
 	if err != nil {
@@ -55,7 +55,6 @@ func fetchTag(url, header, token string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
 	req.Header.Set(header, token)
 
 	res, err := client.Do(req)
