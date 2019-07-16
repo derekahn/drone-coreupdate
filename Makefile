@@ -35,12 +35,14 @@ run:
 	@echo "  $(M)  🏃 Running the 🐳 image...\n"
 	docker run -it --rm --name $(PROJECTNAME) \
 	-e PLUGIN_APP_ID="$(PLUGIN_APP_ID)" \
+	-e PLUGIN_USER="$(PLUGIN_USER)" \
 	-e PLUGIN_KEY="$(PLUGIN_KEY)" \
 	-e PLUGIN_SERVER="$(PLUGIN_SERVER)" \
-	-e PLUGIN_USER="$(PLUGIN_USER)" \
 	-e PLUGIN_PKG_SRC="$(PLUGIN_PKG_SRC)" \
 	-e PLUGIN_PKG_FILE="$(PLUGIN_PKG_FILE)" \
-	-e PLUGIN_PKG_VERSION="$(PLUGIN_PKG_VERSION)" \
+	-e PLUGIN_GIT_API="$(PLUGIN_GIT_API)" \
+	-e PLUGIN_GIT_HEADER="$(PLUGIN_GIT_HEADER)" \
+	-e PLUGIN_GIT_TOKEN="$(PLUGIN_GIT_TOKEN)" \
 	-v "$(PWD)":"$(PWD)" \
 	-w "$(PWD)" \
 	$(PROJECTNAME):dev
