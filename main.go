@@ -56,13 +56,12 @@ func run(c *cli.Context) error {
 			Started: c.Int64("job.started"),
 		},
 		Config: Config{
-			AppID:   c.String("app.id"),
-			Key:     c.String("key"),
-			User:    c.String("user"),
-			Server:  c.String("server"),
-			Version: c.String("pkg.version"),
-			File:    c.String("pkg.file"),
-			Src:     c.String("pkg.src"),
+			AppID:  c.String("app.id"),
+			Key:    c.String("key"),
+			User:   c.String("user"),
+			Server: c.String("server"),
+			File:   c.String("pkg.file"),
+			Src:    c.String("pkg.src"),
 		},
 	}
 	return plugin.Exec()

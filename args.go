@@ -23,13 +23,12 @@ type (
 
 	// Config is settings by user
 	Config struct {
-		AppID   string
-		Key     string
-		User    string
-		Server  string
-		Version string
-		File    string
-		Src     string
+		AppID  string
+		Key    string
+		User   string
+		Server string
+		File   string
+		Src    string
 	}
 
 	// Job captures drone runtime events
@@ -155,11 +154,6 @@ var (
 			Name:   "server",
 			Usage:  "updateservicectl --server",
 			EnvVar: "SERVER,PLUGIN_SERVER",
-		},
-		cli.StringFlag{
-			Name:   "pkg.version",
-			Usage:  "updateservicectl package create --version",
-			EnvVar: "PKG_VERSION,PLUGIN_PKG_VERSION",
 		},
 		cli.StringFlag{
 			Name:   "pkg.file",
