@@ -20,6 +20,7 @@ build:
 clean:
 	@echo "  $(M)  🧹 last 🐳 image...\n"
 	docker image rm $(PROJECTNAME):dev
+	rm -f *.tar
 	@echo $(DONE)
 
 ## install: Installs 🐹 dependencies
