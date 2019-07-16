@@ -38,8 +38,11 @@ type (
 
 	// Repo is git details
 	Repo struct {
-		Owner string
-		Name  string
+		API    string
+		Header string
+		Name   string
+		Owner  string
+		Token  string
 	}
 
 	flags []cli.Flag
@@ -177,14 +180,29 @@ var (
 
 	repoArgs = []cli.Flag{
 		cli.StringFlag{
-			Name:   "repo.owner",
-			Usage:  "repository owner",
-			EnvVar: "DRONE_REPO_OWNER",
+			Name:   "repo.api",
+			Usage:  "git api URL to fetch a list of tags",
+			EnvVar: "GIT_API,PLUGIN_GIT_API",
+		},
+		cli.StringFlag{
+			Name:   "repo.header",
+			Usage:  "git api header key",
+			EnvVar: "GIT_AUTH_HEADER,PLUGIN_GIT_AUTH_HEADER",
 		},
 		cli.StringFlag{
 			Name:   "repo.name",
 			Usage:  "repository name",
 			EnvVar: "DRONE_REPO_NAME",
+		},
+		cli.StringFlag{
+			Name:   "repo.owner",
+			Usage:  "repository owner",
+			EnvVar: "DRONE_REPO_OWNER",
+		},
+		cli.StringFlag{
+			Name:   "repo.token",
+			Usage:  "git API access token with repo read permissions",
+			EnvVar: "GIT_TOKEN,PLUGIN_GIT_TOKEN",
 		},
 	}
 )

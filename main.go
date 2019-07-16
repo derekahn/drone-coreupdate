@@ -33,8 +33,11 @@ func main() {
 func run(c *cli.Context) error {
 	plugin := Plugin{
 		Repo: Repo{
-			Owner: c.String("repo.owner"),
-			Name:  c.String("repo.name"),
+			API:    c.String("repo.api"),
+			Header: c.String("repo.header"),
+			Name:   c.String("repo.name"),
+			Owner:  c.String("repo.owner"),
+			Token:  c.String("repo.token"),
 		},
 		Build: Build{
 			Tag:      c.String("build.tag"),

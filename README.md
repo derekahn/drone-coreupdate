@@ -10,6 +10,18 @@ A drone plugin for **creating** and **uploading** packages to coreos coreupdate.
 ## Required Envs
 
 ```bash
+# Sets the version from the latest git repo's tag
+# PLUGIN_GIT_TOKEN can be a secret
+
+# Github Example
+export PLUGIN_GIT_API=https://api.github.com/repos/derekahn/drone-coreupdate/tags
+export PLUGIN_GIT_HEADER="Authorization"
+export PLUGIN_GIT_TOKEN="token 2a19zc584484ahb02b683bvcm1092db3za6p888l"
+
+# Gitlab Example
+export PLUGIN_GIT_API=https://gitlab.com/api/v4/projects/101/repository/tags
+export PLUGIN_GIT_HEADER=PRIVATE-TOKEN
+export PLUGIN_GIT_TOKEN=N0maQBY8qss2L0NiLPhz
 # Required for 'updateservicectl'
 # These can be configured as drone secrets
 export PLUGIN_USER=human
