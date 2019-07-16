@@ -187,7 +187,7 @@ var (
 		cli.StringFlag{
 			Name:   "repo.header",
 			Usage:  "git api header key",
-			EnvVar: "GIT_AUTH_HEADER,PLUGIN_GIT_AUTH_HEADER",
+			EnvVar: "GIT_HEADER,PLUGIN_GIT_HEADER",
 		},
 		cli.StringFlag{
 			Name:   "repo.name",
