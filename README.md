@@ -18,7 +18,7 @@ export PLUGIN_GIT_HEADER=Authorization
 export PLUGIN_GIT_TOKEN=2a19zc584484ahb02b683bvcm1092db3za6p888l
 
 # Gitlab Example
-export PLUGIN_GIT_API=https://gitlab.com/api/v4/projects/101/repository/tags
+export PLUGIN_GIT_API=https://gitlab.com/api/v4/projects/101/repository/tags?sort=asc
 export PLUGIN_GIT_HEADER=PRIVATE-TOKEN
 export PLUGIN_GIT_TOKEN=N0maQBY8qss2L0NiLPhz
 
