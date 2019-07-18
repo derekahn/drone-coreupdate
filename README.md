@@ -14,8 +14,8 @@ A drone plugin that syncs `yaml` file `version: ${VERSION}` and coreupdate's pac
 
 # Github Example
 export PLUGIN_GIT_API=https://api.github.com/repos/derekahn/drone-coreupdate/tags
-export PLUGIN_GIT_HEADER="Authorization"
-export PLUGIN_GIT_TOKEN="2a19zc584484ahb02b683bvcm1092db3za6p888l"
+export PLUGIN_GIT_HEADER=Authorization
+export PLUGIN_GIT_TOKEN=2a19zc584484ahb02b683bvcm1092db3za6p888l
 
 # Gitlab Example
 export PLUGIN_GIT_API=https://gitlab.com/api/v4/projects/101/repository/tags
