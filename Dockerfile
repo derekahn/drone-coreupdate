@@ -6,7 +6,7 @@ COPY ./go.mod ./
 COPY ./src ./
 
 RUN apk add --no-cache git && \
-		go mod download && \
+    go mod download && \
     GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /go/bin/drone-coreupdate && \
     cd / && go get github.com/coreos/updateservicectl
 

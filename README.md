@@ -1,6 +1,6 @@
 # Drone Coreupdate
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/derekahn/drone-coreupdate)](https://goreportcard.com/report/github.com/derekahn/drone-coreupdate)
+[![Go Report Card](https://goreportcard.com/badge/github.com/derekahn/drone-coreupdate)](https://goreportcard.com/report/github.com/derekahn/drone-coreupdate) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5a94272a12404567a895eda82d8c54cf)](https://www.codacy.com/app/git.derek/drone-coreupdate?utm_source=github.com&utm_medium=referral&utm_content=derekahn/drone-coreupdate&utm_campaign=Badge_Grade) [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
 A drone plugin that syncs `yaml` file `version: ${VERSION}` and coreupdate's package `--version` with the latest github or gitlab tag .
 
@@ -37,9 +37,9 @@ export PLUGIN_PKG_SRC=directory_to_be_tarball
 ## Run 🐳 locally
 
 ```bash
-$ make build
+make build
 
-$ make run
+make run
 ```
 
 ## Make Commands
@@ -54,11 +54,11 @@ $ make run
   shell     To be executed after `make run` to give you a shell into the running container
 ```
 
-## How does it work?
+## How it works
 
 This is an idea of what is basically happening under the hood. Not exactly but close enough.
 
-### GET the latest tag from [github](https://developer.github.com/v3/repos/#list-tags) as `$version`:
+### GET the latest tag from [github](https://developer.github.com/v3/repos/#list-tags) as `$version`
 
 ```bash
 $ curl \
@@ -74,7 +74,7 @@ $ curl \
   https://gitlab.com/api/v4/projects/101/repository/tags
 ```
 
-### Interpolates all files with `${VERSION}` to `$version` in `$PLUGIN_PKG_SRC`/\*\*:
+### Interpolates all files with `${VERSION}` to `$version` in `$PLUGIN_PKG_SRC`/\*\*
 
 ```bash
 $ find $PLUGIN_PKG_SRC \( -type d \) \
@@ -82,13 +82,13 @@ $ find $PLUGIN_PKG_SRC \( -type d \) \
   -print0 | xargs -0 sed -i 's/${VERSION}/$version/g'
 ```
 
-### Creates a tarball from `$PLUGIN_PKG_SRC`:
+### Creates a tarball from `$PLUGIN_PKG_SRC`
 
 ```bash
 $ tar -cvzf $PLUGIN_PKG_FILE.$version.tar $PLUGIN_PKG_SRC
 ```
 
-### [creates 📦](https://coreos.com/products/coreupdate/docs/latest/updatectl-client.html#package-management):
+### [Creates 📦](https://coreos.com/products/coreupdate/docs/latest/updatectl-client.html#package-management)
 
 ```bash
 $ updateservicectl
@@ -103,7 +103,7 @@ $ updateservicectl
   --file=$PLUGIN_PKG_FILE.$version.tar
 ```
 
-### uploads 📦:
+### Uploads 📦
 
 ```bash
 $ updateservicectl
@@ -143,7 +143,7 @@ steps:
       repo: void/void
 ```
 
-#### With Secrets
+### With Secrets
 
 ```yaml
 ---
