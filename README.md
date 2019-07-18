@@ -42,7 +42,7 @@ $ make build
 $ make run
 ```
 
-## Commands
+## Make Commands
 
 ```bash
  Choose a command to run in drone-coreupdate:
@@ -113,4 +113,65 @@ $ updateservicectl
 
   package upload \
   --file=$PLUGIN_PKG_FILE.$version.tar
+```
+
+## Drone Usage
+
+```yaml
+---
+kind: pipeline
+name: default
+
+steps:
+  - name: upload
+    image: derekahn/drone-coreupdate
+    settings:
+      app_id: 14830zbd-40ee-uj38-4lhl-11205bdb820z
+      user: human
+      key: x2g1eia2dg29gbkkkbz211c4a893e8e1
+      server: https://coreupdate.com
+      git_header: Authorization
+      git_api: https://api.github.com/repos/derekahn/drone-coreupdate/tags
+      git_token: 2a19zc584484ahb02b683bvcm1092db3za6p888l
+      pkg_src: directory_to_be_tarball
+      pkg_file: some-project-name
+
+  - name: build
+    image: plugins/docker
+    settings:
+      dry_run: true
+      repo: void/void
+```
+
+#### With Secrets
+
+```yaml
+---
+kind: pipeline
+name: default
+
+steps:
+  - name: upload
+    image: derekahn/drone-coreupdate
+    settings:
+      git_header: Authorization
+      git_api: https://api.github.com/repos/derekahn/drone-coreupdate/tags
+      git_token:
+        from_secret: git_token
+      app_id:
+        from_secret: ctl_app_id
+      user:
+        from_secret: ctl_user
+      key:
+        from_secret: ctl_key
+      server:
+        from_secret: ctl_server
+      pkg_src: directory_to_be_tarball
+      pkg_file: some-project-name
+
+  - name: build
+    image: plugins/docker
+    settings:
+      dry_run: true
+      repo: void/void
 ```
