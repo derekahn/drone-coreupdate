@@ -10,28 +10,30 @@ A drone plugin that syncs `yaml` file `version: ${VERSION}` and coreupdate's pac
 
 ```bash
 # Sets the version from the latest git repo's tag
-# PLUGIN_GIT_TOKEN can be a secret
-
 # Github Example
 export PLUGIN_GIT_API=https://api.github.com/repos/derekahn/drone-coreupdate/tags
 export PLUGIN_GIT_HEADER=Authorization
 export PLUGIN_GIT_TOKEN=2a19zc584484ahb02b683bvcm1092db3za6p888l
 
-# Gitlab Example
+# Sets the version from the latest git repo's tag
+# Gitlab Example (query params 'sort=asc' required)
 export PLUGIN_GIT_API=https://gitlab.com/api/v4/projects/101/repository/tags?sort=asc
 export PLUGIN_GIT_HEADER=PRIVATE-TOKEN
 export PLUGIN_GIT_TOKEN=N0maQBY8qss2L0NiLPhz
 
 # Required for 'updateservicectl'
-# These can be set as secrets
-export PLUGIN_APP_ID=14830zbd-40ee-uj38-4lhl-11205bdb820z
 export PLUGIN_USER=human
 export PLUGIN_KEY=x2g1eia2dg29gbkkkbz211c4a893e8e1
 export PLUGIN_SERVER=https://coreupdate.com
+export PLUGIN_APP_ID=14830zbd-40ee-uj38-4lhl-11205bdb820z
 
 # Required for 'updateservicectl package [create || upload]'
 export PLUGIN_PKG_FILE=some-project-name
 export PLUGIN_PKG_SRC=directory_to_be_tarball
+
+# Required for 'updateservicectl channel update'
+export PLUGIN_CHANNEL=release-me
+export PLUGIN_PUBLISH="false"
 ```
 
 ## Run 🐳 locally
@@ -115,6 +117,21 @@ $ updateservicectl
   --file=$PLUGIN_PKG_FILE.$version.tar
 ```
 
+### Updates channel
+
+```bash
+$ updateservicectl
+  --user=$PLUGIN_USER \
+  --key=$PLUGIN_KEY \
+  --server=$PLUGIN_SERVER \
+
+  channel update \
+  --app-id=$PLUGIN_APP_ID	\
+  --version=$LATEST_GIT_TAG \
+  --channel=$PLUGIN_CHANNEL \
+  --publish=$PLUGIN_PUBLISH
+```
+
 ## Drone Usage
 
 ```yaml
@@ -135,12 +152,8 @@ steps:
       git_token: 2a19zc584484ahb02b683bvcm1092db3za6p888l
       pkg_src: directory_to_be_tarball
       pkg_file: some-project-name
-
-  - name: build
-    image: plugins/docker
-    settings:
-      dry_run: true
-      repo: void/void
+      channel: release-me
+      publish: 'true'
 ```
 
 ### With Secrets
@@ -168,10 +181,6 @@ steps:
         from_secret: ctl_server
       pkg_src: directory_to_be_tarball
       pkg_file: some-project-name
-
-  - name: build
-    image: plugins/docker
-    settings:
-      dry_run: true
-      repo: void/void
+      channel: release-me
+      publish: 'true'
 ```

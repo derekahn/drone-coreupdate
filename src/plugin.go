@@ -21,7 +21,7 @@ func (p Plugin) Exec() error {
 	}
 
 	dir := p.Config.Src
-	file := p.Config.File + "." + version + ".tar"
+	file := p.Config.formatFile(version)
 
 	err = findAndReplace(dir, "${VERSION}", version)
 	if err != nil {
@@ -33,13 +33,22 @@ func (p Plugin) Exec() error {
 		return err
 	}
 
-	output, err := p.createPackage(file, version)
+	createPkg := p.Config.createPkgCMD(version, file)
+	output, err := p.updateservicectl(createPkg)
 	if err != nil {
 		return err
 	}
 	log.Println(string(output))
 
-	output, err = p.uploadPackage(file)
+	uploadPkg := p.Config.uploadPkgCMD(file)
+	output, err = p.updateservicectl(uploadPkg)
+	if err != nil {
+		return err
+	}
+	log.Println(string(output))
+
+	updateChan := p.Config.updateChanCMD(version)
+	output, err = p.updateservicectl(updateChan)
 	if err != nil {
 		return err
 	}
@@ -48,41 +57,9 @@ func (p Plugin) Exec() error {
 	return nil
 }
 
-// runs '$ updateservicectl package create'
-func (p Plugin) createPackage(file, version string) ([]byte, error) {
-	action := []string{
-		"package",
-		"create",
-		"--app-id=" + p.Config.AppID,
-		"--version=" + version,
-		"--file=" + file,
-		"--url=" + p.Config.Server + "/packages/" + file,
-	}
-
-	cmd, args := p.baseCMD()
-	args = append(args, action...)
-	return exec.Command(cmd, args...).Output()
-}
-
-// runs '$ updateservicectl package upload'
-func (p Plugin) uploadPackage(file string) ([]byte, error) {
-	action := []string{
-		"package",
-		"upload",
-		"--file=" + file,
-	}
-
-	cmd, args := p.baseCMD()
-	args = append(args, action...)
-	return exec.Command(cmd, args...).Output()
-}
-
-// runs 'updateservicectl' with the required flags
-func (p Plugin) baseCMD() (string, []string) {
-	flags := []string{
-		"--key=" + p.Config.Key,
-		"--user=" + p.Config.User,
-		"--server=" + p.Config.Server,
-	}
-	return "updateservicectl", flags
+// updateservicectl executes the cli with sub commands and flags
+func (p Plugin) updateservicectl(action []string) ([]byte, error) {
+	creds := p.Config.credFlags()
+	args := append(creds, action...)
+	return exec.Command("updateservicectl", args...).Output()
 }

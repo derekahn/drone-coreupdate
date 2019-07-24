@@ -2,6 +2,8 @@ package main
 
 import "github.com/urfave/cli"
 
+// These are drone plugin defaults
+
 type (
 	// Build represents drone events
 	Build struct {
@@ -19,16 +21,6 @@ type (
 		Link     string
 		Started  int64
 		Created  int64
-	}
-
-	// Config is settings by user
-	Config struct {
-		AppID  string
-		Key    string
-		User   string
-		Server string
-		File   string
-		Src    string
 	}
 
 	// Job captures drone runtime events
@@ -134,39 +126,6 @@ var (
 			Name:   "commit.message",
 			Usage:  "commit message",
 			EnvVar: "DRONE_COMMIT_MESSAGE",
-		},
-	}
-
-	configArgs = []cli.Flag{
-		cli.StringFlag{
-			Name:   "app.id",
-			Usage:  "updateservicectl --app-id",
-			EnvVar: "APP_ID,PLUGIN_APP_ID",
-		},
-		cli.StringFlag{
-			Name:   "key",
-			Usage:  "updateservicectl --key",
-			EnvVar: "KEY,PLUGIN_KEY",
-		},
-		cli.StringFlag{
-			Name:   "user",
-			Usage:  "updateservicectl --user",
-			EnvVar: "CTL_USER,PLUGIN_USER",
-		},
-		cli.StringFlag{
-			Name:   "server",
-			Usage:  "updateservicectl --server",
-			EnvVar: "SERVER,PLUGIN_SERVER",
-		},
-		cli.StringFlag{
-			Name:   "pkg.file",
-			Usage:  "updateservicectl package [create || upload] --file",
-			EnvVar: "PKG_FILE,PLUGIN_PKG_FILE",
-		},
-		cli.StringFlag{
-			Name:   "pkg.src",
-			Usage:  "target directory to tarball",
-			EnvVar: "PKG_SRC,PLUGIN_PKG_SRC",
 		},
 	}
 
