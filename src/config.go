@@ -12,6 +12,9 @@ type Config struct {
 	AppID   string
 	File    string
 	Src     string
+	Channel string
+	Publish string
+}
 var configArgs = []cli.Flag{
 	cli.StringFlag{
 		Name:   "app.id",
@@ -43,3 +46,14 @@ var configArgs = []cli.Flag{
 		Usage:  "target directory to tarball",
 		EnvVar: "PKG_SRC,PLUGIN_PKG_SRC",
 	},
+	cli.StringFlag{
+		Name:   "channel",
+		Usage:  "updateservicectl channel",
+		EnvVar: "CHANNEL,PLUGIN_CHANNEL",
+	},
+	cli.StringFlag{
+		Name:   "publish",
+		Usage:  "updateservicectl channel --publish",
+		EnvVar: "PUBLISH,PLUGIN_PUBLISH",
+	},
+}
