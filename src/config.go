@@ -15,6 +15,44 @@ type Config struct {
 	Channel string
 	Publish string
 }
+func (c Config) createPkgCMD(version, file string) []string {
+	return []string{
+		"package",
+		"create",
+		"--app-id=" + c.AppID,
+		"--version=" + version,
+		"--file=" + file,
+		"--url=" + c.Server + "/packages/" + file,
+	}
+}
+
+func (c Config) uploadPkgCMD(file string) []string {
+	return []string{
+		"package",
+		"upload",
+		"--file=" + file,
+	}
+}
+
+func (c Config) updateChanCMD(version string) []string {
+	return []string{
+		"channel",
+		"update",
+		"--app-id=" + c.AppID,
+		"--channel=" + c.Channel,
+		"--version=" + version,
+		"--publish=" + c.Publish,
+	}
+}
+
+func (c Config) credFlags() []string {
+	return []string{
+		"--key=" + c.Key,
+		"--user=" + c.User,
+		"--server=" + c.Server,
+	}
+}
+
 var configArgs = []cli.Flag{
 	cli.StringFlag{
 		Name:   "app.id",

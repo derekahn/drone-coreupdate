@@ -33,20 +33,19 @@ func (p Plugin) Exec() error {
 		return err
 	}
 
-	output, err := p.createPackage(file, version)
+	createPkg := p.Config.createPkgCMD(version, file)
+	output, err := p.updateservicectl(createPkg)
 	if err != nil {
 		return err
 	}
 	log.Println(string(output))
 
-	output, err = p.uploadPackage(file)
+	uploadPkg := p.Config.uploadPkgCMD(file)
+	output, err = p.updateservicectl(uploadPkg)
 	if err != nil {
 		return err
 	}
 	log.Println(string(output))
-
-	return nil
-}
 
 	updateChan := p.Config.updateChanCMD(version)
 	output, err = p.updateservicectl(updateChan)
