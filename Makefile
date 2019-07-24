@@ -27,7 +27,7 @@ clean:
 .PHONY: install
 install:
 	@echo "  $(M)  👀 for any missing 🐹 dependencies...\n"
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go get $(get) ./...
+	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) cd src && go get $(get) ./...
 	@echo $(DONE)
 
 ## run: Runs the current docker image
