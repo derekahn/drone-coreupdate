@@ -15,6 +15,12 @@ type Config struct {
 	Channel string
 	Publish string
 }
+
+// formatFile creates a file name like "awesome.2.0.0.tar"
+func (c Config) formatFile(version string) string {
+	return c.File + "." + version + ".tar"
+}
+
 func (c Config) createPkgCMD(version, file string) []string {
 	return []string{
 		"package",

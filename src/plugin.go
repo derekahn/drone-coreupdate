@@ -21,7 +21,7 @@ func (p Plugin) Exec() error {
 	}
 
 	dir := p.Config.Src
-	file := p.Config.File + "." + version + ".tar"
+	file := p.Config.formatFile(version)
 
 	err = findAndReplace(dir, "${VERSION}", version)
 	if err != nil {
