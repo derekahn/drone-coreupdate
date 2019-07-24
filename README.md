@@ -135,12 +135,6 @@ steps:
       git_token: 2a19zc584484ahb02b683bvcm1092db3za6p888l
       pkg_src: directory_to_be_tarball
       pkg_file: some-project-name
-
-  - name: build
-    image: plugins/docker
-    settings:
-      dry_run: true
-      repo: void/void
 ```
 
 ### With Secrets
@@ -168,10 +162,4 @@ steps:
         from_secret: ctl_server
       pkg_src: directory_to_be_tarball
       pkg_file: some-project-name
-
-  - name: build
-    image: plugins/docker
-    settings:
-      dry_run: true
-      repo: void/void
 ```
