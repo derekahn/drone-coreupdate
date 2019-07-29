@@ -20,5 +20,7 @@ RUN mkdir /lib64 && \
 
 COPY --from=builder /go/bin/ /bin/
 
+HEALTHCHECK --interval=5s --timeout=10s --retries=3 \
+  CMD [[ $(/bin/updateservicectl --version) =~ "1.4.0" ]] || exit 1
 
 ENTRYPOINT ["/bin/drone-coreupdate"]
