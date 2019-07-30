@@ -16,15 +16,11 @@ RUN mkdir /lib64 && \
     ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2 && \
     apk update && \
     apk --no-cache -Uuv add curl ca-certificates && \
-    rm -rf /var/cache/apk/* && \
+    rm -rf /var/cache/apk/*
 
-    # Create the user and group files that will be used in the running container to
-    # run the process an unprivileged user.
-    addgroup -g 1000 -S drone && \
-    adduser -u 1000 -S drone -G drone
+COPY --from=builder /go/bin/ /bin/
 
-COPY --chown=drone --from=builder /go/bin/ /bin/
-
-USER drone:drone
+HEALTHCHECK --interval=5s --timeout=10s --retries=3 \
+  CMD [[ $(/bin/updateservicectl --version) =~ "1.4.0" ]] || exit 1
 
 ENTRYPOINT ["/bin/drone-coreupdate"]
