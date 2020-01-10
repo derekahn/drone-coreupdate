@@ -77,6 +77,8 @@ func fetchTag(url, header, token string) (string, error) {
 		return "", errors.New("No tags available")
 	}
 
-	latest, _ := tags[len(tags)-1], tags[:len(tags)-1]
+	// Using '/tags?order_by=updated' query param we
+	// need to take the first element
+	latest, _ := tags[0], tags[1:]
 	return latest.Version, nil
 }

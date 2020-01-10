@@ -10,14 +10,14 @@ A drone plugin that syncs `yaml` file `version: ${VERSION}` and coreupdate's pac
 
 ```bash
 # Sets the version from the latest git repo's tag
-# Github Example
+# Github Example (need the latest version as first)
 export PLUGIN_GIT_API=https://api.github.com/repos/derekahn/drone-coreupdate/tags
 export PLUGIN_GIT_HEADER=Authorization
 export PLUGIN_GIT_TOKEN=2a19zc584484ahb02b683bvcm1092db3za6p888l
 
 # Sets the version from the latest git repo's tag
-# Gitlab Example (query params 'sort=asc' required)
-export PLUGIN_GIT_API=https://gitlab.com/api/v4/projects/101/repository/tags?sort=asc
+# Gitlab Example (query params 'order_by' required; need latest version as first)
+export PLUGIN_GIT_API=https://gitlab.com/api/v4/projects/101/repository/tags?order_by=updated
 export PLUGIN_GIT_HEADER=PRIVATE-TOKEN
 export PLUGIN_GIT_TOKEN=N0maQBY8qss2L0NiLPhz
 
