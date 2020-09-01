@@ -12,7 +12,7 @@ help: Makefile
 .PHONY: build
 build:
 	@echo "  $(M)  🔨 Building the 🐳 image...\n"
-	docker build -t=$(PROJECTNAME):dev .
+	docker build -t=$(PROJECTNAME):dev -f Dockerfile .
 	@echo $(DONE)
 
 ## clean: Removes the recently built docker image
@@ -44,8 +44,10 @@ run:
 	-e PLUGIN_GIT_API="$(PLUGIN_GIT_API)" \
 	-e PLUGIN_GIT_HEADER="$(PLUGIN_GIT_HEADER)" \
 	-e PLUGIN_GIT_TOKEN="$(PLUGIN_GIT_TOKEN)" \
-	-v "$(PWD)":"$(PWD)" \
-	-w "$(PWD)" \
+	-e PLUGIN_GIT_TOKEN="$(PLUGIN_GIT_TOKEN)" \
+	-e PLUGIN_QUAY_API="$(PLUGIN_QUAY_API)" \
+	-e PLUGIN_QUAY_TOKEN="$(PLUGIN_QUAY_TOKEN)" \
+	-v "$(PWD)/$(PLUGIN_PKG_SRC):/app/$(PLUGIN_PKG_SRC)" \
 	$(PROJECTNAME):dev
 	@echo $(DONE)
 

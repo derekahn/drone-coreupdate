@@ -21,6 +21,11 @@ export PLUGIN_GIT_API=https://gitlab.com/api/v4/projects/101/repository/tags?ord
 export PLUGIN_GIT_HEADER=PRIVATE-TOKEN
 export PLUGIN_GIT_TOKEN=N0maQBY8qss2L0NiLPhz
 
+# These vars are to set the deployment.image sha256
+# We end the URL at '=' so that we can dynamically set the tag at runtime
+export PLUGIN_QUAY_API=https://quay.io/api/v1/repository/derekahn/autoapp/tag/?onlyActiveTags=true&specificTag=
+export PLUGIN_QUAY_TOKEN=xTaZ12XHXXG0pXLxW67kCWV312J5iwBaMw2UAjOy
+
 # Required for 'updateservicectl'
 export PLUGIN_USER=human
 export PLUGIN_KEY=x2g1eia2dg29gbkkkbz211c4a893e8e1
@@ -150,6 +155,8 @@ steps:
       git_header: Authorization
       git_api: https://api.github.com/repos/derekahn/drone-coreupdate/tags
       git_token: 2a19zc584484ahb02b683bvcm1092db3za6p888l
+      git_api: https://quay.io/api/v1/repository/derekahn/autoapp/tag/?onlyActiveTags=true&specificTag=
+      git_token: xTaZ12XHXXG0pXLxW67kCWV312J5iwBaMw2UAjOy
       pkg_src: directory_to_be_tarball
       pkg_file: some-project-name
       channel: release-me
@@ -179,6 +186,9 @@ steps:
         from_secret: ctl_key
       server:
         from_secret: ctl_server
+      quay_api: https://quay.io/api/v1/repository/derekahn/autoapp/tag/?onlyActiveTags=true&specificTag=
+      quay_token:
+        from_secret: quay_token
       pkg_src: directory_to_be_tarball
       pkg_file: some-project-name
       channel: release-me

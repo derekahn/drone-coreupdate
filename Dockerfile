@@ -1,8 +1,8 @@
-FROM golang:1.13.6-alpine AS builder
+FROM golang:1.15.0-alpine3.12 AS builder
 
-WORKDIR /src
+WORKDIR /app
 
-COPY ./src .
+COPY . .
 
 RUN apk add --no-cache git && \
     go mod download && \
@@ -10,7 +10,7 @@ RUN apk add --no-cache git && \
     cd / && go get github.com/coreos/updateservicectl
 
 
-FROM alpine:3.11.2 AS final
+FROM alpine:3.12 AS final
 
 RUN mkdir /lib64 && \
     ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2 && \

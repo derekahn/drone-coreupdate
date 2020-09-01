@@ -2,10 +2,7 @@ package main
 
 import (
 	"bytes"
-	"encoding/json"
-	"errors"
 	"io/ioutil"
-	"net/http"
 
 	"github.com/mholt/archiver"
 )
@@ -46,39 +43,4 @@ func findAndReplace(dir, find, replace string) error {
 		}
 	}
 	return nil
-}
-
-// fetchTag 'GET' git[lab/hub] api for latest tag
-func fetchTag(url, header, token string) (string, error) {
-	client := &http.Client{}
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return "", err
-	}
-	req.Header.Set(header, token)
-
-	res, err := client.Do(req)
-	if err != nil {
-		return "", err
-	}
-	defer res.Body.Close()
-
-	// Both github and gitlab reponses have property "name"
-	type tag struct {
-		Version string `json:"name"`
-	}
-
-	var tags []tag
-	err = json.NewDecoder(res.Body).Decode(&tags)
-	if err != nil {
-		return "", err
-	}
-	if len(tags) < 1 {
-		return "", errors.New("No tags available")
-	}
-
-	// Using '/tags?order_by=updated' query param we
-	// need to take the first element
-	latest, _ := tags[0], tags[1:]
-	return latest.Version, nil
 }

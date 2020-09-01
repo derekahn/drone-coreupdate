@@ -11,11 +11,12 @@ type Plugin struct {
 	Build  Build
 	Config Config
 	Job    Job
+	Quay   Quay
 }
 
 // Exec is the entrypoint
 func (p Plugin) Exec() error {
-	version, err := fetchTag(p.Repo.API, p.Repo.Header, p.Repo.Token)
+	version, err := p.fetchTag()
 	if err != nil {
 		return err
 	}
@@ -23,13 +24,21 @@ func (p Plugin) Exec() error {
 	dir := p.Config.Src
 	file := p.Config.formatFile(version)
 
-	err = findAndReplace(dir, "${VERSION}", version)
-	if err != nil {
+	if p.Quay.API != "" {
+		sha, err := p.fetchSHA(version)
+		if err != nil {
+			return err
+		}
+		if err := findAndReplace(dir, "${SHA}", sha); err != nil {
+			return err
+		}
+	}
+
+	if err := findAndReplace(dir, "${VERSION}", version); err != nil {
 		return err
 	}
 
-	err = archive(dir, file)
-	if err != nil {
+	if err := archive(dir, file); err != nil {
 		return err
 	}
 

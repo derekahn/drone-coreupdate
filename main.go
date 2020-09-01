@@ -68,6 +68,10 @@ func run(c *cli.Context) error {
 			Channel: c.String("channel"),
 			Publish: c.String("publish"),
 		},
+		Quay: Quay{
+			API:   c.String("quay.api"),
+			Token: c.String("quay.token"),
+		},
 	}
 	return plugin.Exec()
 }

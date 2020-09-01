@@ -37,6 +37,12 @@ type (
 		Token  string
 	}
 
+	// Quay of docker registry repo
+	Quay struct {
+		API   string
+		Token string
+	}
+
 	flags []cli.Flag
 )
 
@@ -46,6 +52,7 @@ var (
 		configArgs,
 		jobArgs,
 		repoArgs,
+		quayArgs,
 	}
 
 	buildArgs = []cli.Flag{
@@ -162,6 +169,19 @@ var (
 			Name:   "repo.token",
 			Usage:  "git API access token with repo read permissions",
 			EnvVar: "GIT_TOKEN,PLUGIN_GIT_TOKEN",
+		},
+	}
+
+	quayArgs = []cli.Flag{
+		cli.StringFlag{
+			Name:   "quay.api",
+			Usage:  "quay api URL to fetch an image tags",
+			EnvVar: "QUAY_API,PLUGIN_QUAY_API",
+		},
+		cli.StringFlag{
+			Name:   "quay.token",
+			Usage:  "quay API access token with repo read permissions",
+			EnvVar: "QUAY_TOKEN,PLUGIN_QUAY_TOKEN",
 		},
 	}
 )
