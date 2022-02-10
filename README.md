@@ -1,6 +1,6 @@
 # Drone Coreupdate
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/derekahn/drone-coreupdate)](https://goreportcard.com/report/github.com/derekahn/drone-coreupdate) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5a94272a12404567a895eda82d8c54cf)](https://www.codacy.com/app/git.derek/drone-coreupdate?utm_source=github.com&utm_medium=referral&utm_content=derekahn/drone-coreupdate&utm_campaign=Badge_Grade) [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+[![Go Report Card](https://goreportcard.com/badge/github.com/derekahn/drone-coreupdate)](https://goreportcard.com/report/github.com/derekahn/drone-coreupdate) [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
 A drone plugin that syncs `yaml` file `version: ${VERSION}` and coreupdate's package `--version` with the latest github or gitlab tag .
 
