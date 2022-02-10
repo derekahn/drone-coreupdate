@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -8,7 +9,14 @@ import (
 
 // fetchTag 'GET' gitlab or github api for latest tag
 func (p Plugin) fetchTag() (string, error) {
-	client := &http.Client{}
+	client := &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{
+				InsecureSkipVerify: true,
+			},
+		},
+	}
+
 	req, err := http.NewRequest("GET", p.Repo.API, nil)
 	if err != nil {
 		return "", err
@@ -45,7 +53,13 @@ func (p Plugin) fetchTag() (string, error) {
 func (p Plugin) fetchSHA(version string) (string, error) {
 	url := p.Quay.API + version
 
-	client := &http.Client{}
+	client := &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{
+				InsecureSkipVerify: true,
+			},
+		},
+	}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return "", err
