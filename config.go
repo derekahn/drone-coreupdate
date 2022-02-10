@@ -53,6 +53,7 @@ func (c Config) updateChanCMD(version string) []string {
 
 func (c Config) credFlags() []string {
 	return []string{
+		"--skip-ssl-verify=true",
 		"--key=" + c.Key,
 		"--user=" + c.User,
 		"--server=" + c.Server,

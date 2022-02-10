@@ -6,6 +6,8 @@ A drone plugin that syncs `yaml` file `version: ${VERSION}` and coreupdate's pac
 
 > This is just a wrapper around [updateservicectl](https://github.com/coreos/updateservicectl)
 
+**NOTE**: This version includes the "--skip-ssl-verify=true" option for all commands. This is a good remedy for self-signed certs.
+
 ## Required Envs
 
 ```bash
